@@ -357,7 +357,7 @@ def f24(x):
     else:
         penalty3 = 0
 
-    if x2 > lb_x2:
+    if x2 > ub_x2:
         penalty4 = 1
     else:
         penalty4 = 0
