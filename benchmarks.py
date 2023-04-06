@@ -392,6 +392,7 @@ def getFunctionDetails(a):
         "F21": ["F21", 0, 10, 4],
         "F22": ["F22", 0, 10, 4],
         "F23": ["F23", 0, 10, 4],
+        "F24": ["F24", 0, 1.5, 2],
     }
     return param.get(a, "nothing")
 
