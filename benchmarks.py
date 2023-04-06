@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue May 17 12:46:20 2016
-
 @author: Hossam Faris
 """
 
-import numpy
+import numpy as np
 import math
+from scipy.io import loadmat
+from basic_functions import fsphere, fgriewank, frastrigin, fackley, fweierstrass
+
 
 # define the function blocks
 def prod(it):
@@ -22,7 +24,7 @@ def Ufun(x, a, k, m):
 
 
 def F1(x):
-    s = numpy.sum(x ** 2)
+    s = np.sum(x ** 2)
     return s
 
 
@@ -35,7 +37,7 @@ def F3(x):
     dim = len(x) + 1
     o = 0
     for i in range(1, dim):
-        o = o + (numpy.sum(x[0:i])) ** 2
+        o = o + (np.sum(x[0:i])) ** 2
     return o
 
 
@@ -46,14 +48,14 @@ def F4(x):
 
 def F5(x):
     dim = len(x)
-    o = numpy.sum(
+    o = np.sum(
         100 * (x[1:dim] - (x[0 : dim - 1] ** 2)) ** 2 + (x[0 : dim - 1] - 1) ** 2
     )
     return o
 
 
 def F6(x):
-    o = numpy.sum(abs((x + 0.5)) ** 2)
+    o = np.sum(abs((x + 0.5)) ** 2)
     return o
 
 
@@ -63,28 +65,28 @@ def F7(x):
     w = [i for i in range(len(x))]
     for i in range(0, dim):
         w[i] = i + 1
-    o = numpy.sum(w * (x ** 4)) + numpy.random.uniform(0, 1)
+    o = np.sum(w * (x ** 4)) + np.random.uniform(0, 1)
     return o
 
 
 def F8(x):
-    o = sum(-x * (numpy.sin(numpy.sqrt(abs(x)))))
+    o = sum(-x * (np.sin(np.sqrt(abs(x)))))
     return o
 
 
 def F9(x):
     dim = len(x)
-    o = numpy.sum(x ** 2 - 10 * numpy.cos(2 * math.pi * x)) + 10 * dim
+    o = np.sum(x ** 2 - 10 * np.cos(2 * math.pi * x)) + 10 * dim
     return o
 
 
 def F10(x):
     dim = len(x)
     o = (
-        -20 * numpy.exp(-0.2 * numpy.sqrt(numpy.sum(x ** 2) / dim))
-        - numpy.exp(numpy.sum(numpy.cos(2 * math.pi * x)) / dim)
+        -20 * np.exp(-0.2 * np.sqrt(np.sum(x ** 2) / dim))
+        - np.exp(np.sum(np.cos(2 * math.pi * x)) / dim)
         + 20
-        + numpy.exp(1)
+        + np.exp(1)
     )
     return o
 
@@ -93,20 +95,20 @@ def F11(x):
     dim = len(x)
     w = [i for i in range(len(x))]
     w = [i + 1 for i in w]
-    o = numpy.sum(x ** 2) / 4000 - prod(numpy.cos(x / numpy.sqrt(w))) + 1
+    o = np.sum(x ** 2) / 4000 - prod(np.cos(x / np.sqrt(w))) + 1
     return o
 
 
 def F12(x):
     dim = len(x)
     o = (math.pi / dim) * (
-        10 * ((numpy.sin(math.pi * (1 + (x[0] + 1) / 4))) ** 2)
-        + numpy.sum(
+        10 * ((np.sin(math.pi * (1 + (x[0] + 1) / 4))) ** 2)
+        + np.sum(
             (((x[: dim - 1] + 1) / 4) ** 2)
-            * (1 + 10 * ((numpy.sin(math.pi * (1 + (x[1 :] + 1) / 4)))) ** 2)
+            * (1 + 10 * ((np.sin(math.pi * (1 + (x[1 :] + 1) / 4)))) ** 2)
         )
         + ((x[dim - 1] + 1) / 4) ** 2
-    ) + numpy.sum(Ufun(x, 10, 100, 4))
+    ) + np.sum(Ufun(x, 10, 100, 4))
     return o
 
 
@@ -115,13 +117,13 @@ def F13(x):
         x = x.reshape(1,-1)
 
     o = 0.1 * (
-        (numpy.sin(3 * numpy.pi * x[:,0])) ** 2
-        + numpy.sum(
+        (np.sin(3 * np.pi * x[:,0])) ** 2
+        + np.sum(
             (x[:,:-1] - 1) ** 2
-            * (1 + (numpy.sin(3 * numpy.pi * x[:,1:])) ** 2), axis=1
+            * (1 + (np.sin(3 * np.pi * x[:,1:])) ** 2), axis=1
         )
-        + ((x[:,-1] - 1) ** 2) * (1 + (numpy.sin(2 * numpy.pi * x[:,-1])) ** 2)
-    ) + numpy.sum(Ufun(x, 5, 100, 4))
+        + ((x[:,-1] - 1) ** 2) * (1 + (np.sin(2 * np.pi * x[:,-1])) ** 2)
+    ) + np.sum(Ufun(x, 5, 100, 4))
     return o
 
 
@@ -142,16 +144,16 @@ def F14(x):
             32, 32, 32, 32, 32,
         ],
     ]
-    aS = numpy.asarray(aS)
-    bS = numpy.zeros(25)
-    v = numpy.matrix(x)
+    aS = np.asarray(aS)
+    bS = np.zeros(25)
+    v = np.matrix(x)
     for i in range(0, 25):
         H = v - aS[:, i]
-        bS[i] = numpy.sum((numpy.power(H, 6)))
+        bS[i] = np.sum((np.power(H, 6)))
     w = [i for i in range(25)]
     for i in range(0, 24):
         w[i] = i + 1
-    o = ((1.0 / 500) + numpy.sum(1.0 / (w + bS))) ** (-1)
+    o = ((1.0 / 500) + np.sum(1.0 / (w + bS))) ** (-1)
     return o
 
 
@@ -161,10 +163,10 @@ def F15(L):
         0.0456, 0.0342, 0.0323, 0.0235, 0.0246,
     ]
     bK = [0.25, 0.5, 1, 2, 4, 6, 8, 10, 12, 14, 16]
-    aK = numpy.asarray(aK)
-    bK = numpy.asarray(bK)
+    aK = np.asarray(aK)
+    bK = np.asarray(bK)
     bK = 1 / bK
-    fit = numpy.sum(
+    fit = np.sum(
         (aK - ((L[0] * (bK ** 2 + L[1] * bK)) / (bK ** 2 + L[2] * bK + L[3]))) ** 2
     )
     return fit
@@ -184,9 +186,9 @@ def F16(L):
 
 def F17(L):
     o = (
-        (L[1] - (L[0] ** 2) * 5.1 / (4 * (numpy.pi ** 2)) + 5 / numpy.pi * L[0] - 6)
+        (L[1] - (L[0] ** 2) * 5.1 / (4 * (np.pi ** 2)) + 5 / np.pi * L[0] - 6)
         ** 2
-        + 10 * (1 - 1 / (8 * numpy.pi)) * numpy.cos(L[0])
+        + 10 * (1 - 1 / (8 * np.pi)) * np.cos(L[0])
         + 10
     )
     return o
@@ -222,19 +224,19 @@ def F18(L):
 # map the inputs to the function blocks
 def F19(L):
     aH = [[3, 10, 30], [0.1, 10, 35], [3, 10, 30], [0.1, 10, 35]]
-    aH = numpy.asarray(aH)
+    aH = np.asarray(aH)
     cH = [1, 1.2, 3, 3.2]
-    cH = numpy.asarray(cH)
+    cH = np.asarray(cH)
     pH = [
         [0.3689, 0.117, 0.2673],
         [0.4699, 0.4387, 0.747],
         [0.1091, 0.8732, 0.5547],
         [0.03815, 0.5743, 0.8828],
     ]
-    pH = numpy.asarray(pH)
+    pH = np.asarray(pH)
     o = 0
     for i in range(0, 4):
-        o = o - cH[i] * numpy.exp(-(numpy.sum(aH[i, :] * ((L - pH[i, :]) ** 2))))
+        o = o - cH[i] * np.exp(-(np.sum(aH[i, :] * ((L - pH[i, :]) ** 2))))
     return o
 
 
@@ -245,19 +247,19 @@ def F20(L):
         [3, 3.5, 1.7, 10, 17, 8],
         [17, 8, 0.05, 10, 0.1, 14],
     ]
-    aH = numpy.asarray(aH)
+    aH = np.asarray(aH)
     cH = [1, 1.2, 3, 3.2]
-    cH = numpy.asarray(cH)
+    cH = np.asarray(cH)
     pH = [
         [0.1312, 0.1696, 0.5569, 0.0124, 0.8283, 0.5886],
         [0.2329, 0.4135, 0.8307, 0.3736, 0.1004, 0.9991],
         [0.2348, 0.1415, 0.3522, 0.2883, 0.3047, 0.6650],
         [0.4047, 0.8828, 0.8732, 0.5743, 0.1091, 0.0381],
     ]
-    pH = numpy.asarray(pH)
+    pH = np.asarray(pH)
     o = 0
     for i in range(0, 4):
-        o = o - cH[i] * numpy.exp(-(numpy.sum(aH[i, :] * ((L - pH[i, :]) ** 2))))
+        o = o - cH[i] * np.exp(-(np.sum(aH[i, :] * ((L - pH[i, :]) ** 2))))
     return o
 
 
@@ -275,11 +277,11 @@ def F21(L):
         [7, 3.6, 7, 3.6],
     ]
     cSH = [0.1, 0.2, 0.2, 0.4, 0.4, 0.6, 0.3, 0.7, 0.5, 0.5]
-    aSH = numpy.asarray(aSH)
-    cSH = numpy.asarray(cSH)
+    aSH = np.asarray(aSH)
+    cSH = np.asarray(cSH)
     fit = 0
     for i in range(5):
-        v = numpy.matrix(L - aSH[i, :])
+        v = np.matrix(L - aSH[i, :])
         fit = fit - ((v) * (v.T) + cSH[i]) ** (-1)
     o = fit.item(0)
     return o
@@ -299,11 +301,11 @@ def F22(L):
         [7, 3.6, 7, 3.6],
     ]
     cSH = [0.1, 0.2, 0.2, 0.4, 0.4, 0.6, 0.3, 0.7, 0.5, 0.5]
-    aSH = numpy.asarray(aSH)
-    cSH = numpy.asarray(cSH)
+    aSH = np.asarray(aSH)
+    cSH = np.asarray(cSH)
     fit = 0
     for i in range(7):
-        v = numpy.matrix(L - aSH[i, :])
+        v = np.matrix(L - aSH[i, :])
         fit = fit - ((v) * (v.T) + cSH[i]) ** (-1)
     o = fit.item(0)
     return o
@@ -323,49 +325,327 @@ def F23(L):
         [7, 3.6, 7, 3.6],
     ]
     cSH = [0.1, 0.2, 0.2, 0.4, 0.4, 0.6, 0.3, 0.7, 0.5, 0.5]
-    aSH = numpy.asarray(aSH)
-    cSH = numpy.asarray(cSH)
+    aSH = np.asarray(aSH)
+    cSH = np.asarray(cSH)
     fit = 0
     for i in range(10):
-        v = numpy.matrix(L - aSH[i, :])
+        v = np.matrix(L - aSH[i, :])
         fit = fit - ((v) * (v.T) + cSH[i]) ** (-1)
     o = fit.item(0)
     return o
 
-def f24(x):
+def F24(x):
     x1 = x[0]
     x2 = x[1]
-
+    
     lb_x1 = 0
     ub_x1 = 1.5
-
+    
     lb_x2 = 0
     ub_x2 = 1.4
-
+    
     if x1 < lb_x1:
         penalty1 = 1
     else:
         penalty1 = 0
-
+        
     if x1 > ub_x1:
         penalty2 = 1
     else:
-        penalty2 = 0   
-
+        penalty2 = 0
+        
     if x2 < lb_x2:
         penalty3 = 1
     else:
         penalty3 = 0
-
+        
     if x2 > ub_x2:
         penalty4 = 1
     else:
         penalty4 = 0
-
-    z = (1 + x1) ** 2 + 100 * (x2 - x1 ** 2) ** 2 + penalty1 + penalty2 + penalty3 + penalty4
-
+        
+    z = (1 - x1) ** 2 + 100 * (x2 - x1 ** 2) ** 2 + penalty1 + penalty2 + penalty3 + penalty4
+    
     return z
 
+#-----------------------------------------------------------------------------------------------
+# define the composition function
+def hybrid_composition_func(x, fun_num, func, o, sigma, lamda, bias, M):
+    D = len(x)
+    weight = np.zeros(fun_num)
+    for i in range(fun_num):
+        oo = o[i, :]
+        weight[i] = np.exp(-np.sum(np.power(x - oo, 2)) / (2 * D * sigma[i] ** 2))
+
+    weight = np.where(weight == np.max(weight), 
+                      weight, 
+                      weight * (1 - np.max(weight) ** 10))
+
+    weight /= np.sum(weight)
+
+    fit = 0
+    for i in range(fun_num):
+        oo = o[i, :]
+        f = func[f'f{i+1}'](((x - oo) / (lamda[i])) @ M[f'M{i+1}'])
+        x1 = 5 * np.ones(D)
+        f1 = func[f'f{i+1}']((x1 / (lamda[i]))  @ M[f'M{i+1}'])
+        fit1 = 2000 * f / f1
+        fit += weight[i] * (fit1 + bias[i])
+
+    return fit
+    
+#-----------------------------------------------------------------------------------------------
+#   1.	Composition Function 1
+def CF1(x):
+    D = len(x)
+    fun_num = 10
+    mat_dict = loadmat('com_func1_data.mat')  # load predefined optima
+
+    o = mat_dict['o']
+    if len(o[0,:]) >= D:
+        o = o[:, :D]
+    else:
+        o = -5 + 10 * np.random.rand(fun_num, D)
+    o[9, :] = np.zeros(D)
+
+    func = {'f1': fsphere,
+            'f2': fsphere,
+            'f3': fsphere,
+            'f4': fsphere,
+            'f5': fsphere,
+            'f6': fsphere,
+            'f7': fsphere,
+            'f8': fsphere,
+            'f9': fsphere,
+            'f10': fsphere
+           }
+
+    bias = np.arange(fun_num) * 100
+    sigma = np.ones(fun_num)
+    lamda = np.ones(fun_num) * 5/100
+
+    M = {}
+    for i in range(1, fun_num+1):
+        M[f'M{i}'] = np.diag(np.ones(D))
+
+    fit = hybrid_composition_func(x, fun_num, func, o, sigma, lamda, bias, M)
+    return fit
+
+#-----------------------------------------------------------------------------------------------
+#   2.	Composition Function 2
+def CF2(x):
+    D = len(x)
+    fun_num = 10
+    mat_dict = loadmat('com_func2_data.mat')  # load predefined optima
+
+    o = mat_dict['o']
+    if len(o[0,:]) >= D:
+        o = o[:, :D]
+    else:
+        o = -5 + 10 * np.random.rand(fun_num, D)
+    o[9, :] = np.zeros(D)
+
+    func = {'f1': fgriewank,
+            'f2': fgriewank,
+            'f3': fgriewank,
+            'f4': fgriewank,
+            'f5': fgriewank,
+            'f6': fgriewank,
+            'f7': fgriewank,
+            'f8': fgriewank,
+            'f9': fgriewank,
+            'f10': fgriewank
+           }
+
+    bias = np.arange(fun_num) * 100
+    sigma = np.ones(fun_num)
+    lamda = np.ones(fun_num) * 5/100
+
+    if D == 10:
+        mat_dict = loadmat('com_func2_M_D10.mat')
+        M = {}
+        for i in range(fun_num):
+            M[f'M{i+1}'] = list(mat_dict['M'].tolist()[0][0])[i]
+    else:
+        M = {}
+        for i in range(1, fun_num+1):
+            M[f'M{i}'] = orthm_generator(D)
+
+    fit = hybrid_composition_func(x, fun_num, func, o, sigma, lamda, bias, M)
+    return fit
+    
+#-----------------------------------------------------------------------------------------------
+#   3.	Composition Function 3
+def CF3(x):
+    D = len(x)
+    fun_num = 10
+    mat_dict = loadmat('com_func3_data.mat')  # load predefined optima
+
+    o = mat_dict['o']
+    if len(o[0,:]) >= D:
+        o = o[:, :D]
+    else:
+        o = -5 + 10 * np.random.rand(fun_num, D)
+    o[9, :] = np.zeros(D)
+
+    func = {'f1': frastrigin,
+            'f2': frastrigin,
+            'f3': frastrigin,
+            'f4': frastrigin,
+            'f5': frastrigin,
+            'f6': frastrigin,
+            'f7': frastrigin,
+            'f8': frastrigin,
+            'f9': frastrigin,
+            'f10': frastrigin
+           }
+
+    bias = np.arange(fun_num) * 100
+    sigma = np.ones(fun_num)
+    lamda = np.array([5/32, 5/32, 1, 1, 10, 10, 5/100, 5/100, 5/100, 5/100])
+
+    if D == 10:
+        mat_dict = loadmat('com_func3_M_D10.mat')
+        M = {}
+        for i in range(fun_num):
+            M[f'M{i+1}'] = list(mat_dict['M'].tolist()[0][0])[i]
+    else:
+        M = {}
+        for i in range(1, fun_num+1):
+            M[f'M{i}'] = orthm_generator(D)
+
+    fit = hybrid_composition_func(x, fun_num, func, o, sigma, lamda, bias, M)
+    return fit
+
+#-----------------------------------------------------------------------------------------------
+#   4.	Rotated Hybrid Composition Function 1
+def CF4(x):
+    D = len(x)
+    fun_num = 10
+    mat_dict = loadmat('hybrid_func1_data.mat')  # load predefined optima
+
+    o = mat_dict['o']
+    if len(o[0,:]) >= D:
+        o = o[:, :D]
+    else:
+        o = -5 + 10 * np.random.rand(fun_num, D)
+    o[9, :] = np.zeros(D)
+
+    func = {'f1': fackley,
+            'f2': fackley,
+            'f3': frastrigin,
+            'f4': frastrigin,
+            'f5': fweierstrass,
+            'f6': fweierstrass,
+            'f7': fgriewank,
+            'f8': fgriewank,
+            'f9': fsphere,
+            'f10': fsphere
+           }
+
+    bias = np.arange(fun_num) * 100
+    sigma = np.ones(fun_num)
+    lamda = np.array([5/32, 5/32, 1, 1, 10, 10, 5/100, 5/100, 5/100, 5/100])
+
+    if D == 10:
+        mat_dict = loadmat('hybrid_func1_M_D10.mat')
+        M = {}
+        for i in range(fun_num):
+            M[f'M{i+1}'] = list(mat_dict['M'].tolist()[0][0])[i]
+    else:
+        M = {}
+        for i in range(1, fun_num+1):
+            M[f'M{i}'] = orthm_generator(D)
+
+    fit = hybrid_composition_func(x, fun_num, func, o, sigma, lamda, bias, M)
+    return fit
+
+#-----------------------------------------------------------------------------------------------
+#   5.	Rotated Hybrid Composition Function 2
+def CF5(x):
+    D = len(x)
+    fun_num = 10
+    mat_dict = loadmat('hybrid_func2_data.mat')  # load predefined optima
+
+    o = mat_dict['o']
+    if len(o[0,:]) >= D:
+        o = o[:, :D]
+    else:
+        o = -5 + 10 * np.random.rand(fun_num, D)
+    o[9, :] = np.zeros(D)
+
+    func = {'f1': frastrigin,
+            'f2': frastrigin,
+            'f3': fweierstrass,
+            'f4': fweierstrass,
+            'f5': fgriewank,
+            'f6': fgriewank,
+            'f7': fackley,
+            'f8': fackley,
+            'f9': fsphere,
+            'f10': fsphere
+           }
+
+    bias = np.arange(fun_num) * 100
+    sigma = np.ones(fun_num)
+    lamda = np.array([1/5, 1/5, 10, 10, 5/100, 5/100, 5/32, 5/32, 5/100, 5/100])
+
+    if D == 10:
+        mat_dict = loadmat('hybrid_func2_M_D10.mat')
+        M = {}
+        for i in range(fun_num):
+            M[f'M{i+1}'] = list(mat_dict['M'].tolist()[0][0])[i]
+    else:
+        M = {}
+        for i in range(1, fun_num+1):
+            M[f'M{i}'] = orthm_generator(D)
+
+    fit = hybrid_composition_func(x, fun_num, func, o, sigma, lamda, bias, M)
+    return fit
+
+#-----------------------------------------------------------------------------------------------
+#   6.	Rotated Hybrid Composition Function 3
+def CF6(x):
+    D = len(x)
+    fun_num = 10
+    mat_dict = loadmat('hybrid_func2_data.mat')  # load predefined optima
+
+    o = mat_dict['o']
+    if len(o[0,:]) >= D:
+        o = o[:, :D] 
+    else:
+        o = -5 + 10 * np.random.rand(fun_num, D)
+    o[9, :] = np.zeros(D)
+
+    func = {'f1': frastrigin,
+            'f2': frastrigin,
+            'f3': fweierstrass,
+            'f4': fweierstrass,
+            'f5': fgriewank,
+            'f6': fgriewank,
+            'f7': fackley,
+            'f8': fackley,
+            'f9': fsphere,
+            'f10': fsphere
+           }
+
+    bias = np.arange(fun_num) * 100
+    sigma = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
+    lamda = np.array([1/5, 1/5, 10, 10, 5/100, 5/100, 5/32, 5/32, 5/100, 5/100]) * sigma
+
+    if D == 10:
+        mat_dict = loadmat('hybrid_func2_M_D10.mat')
+        M = {}
+        for i in range(fun_num):
+            M[f'M{i+1}'] = list(mat_dict['M'].tolist()[0][0])[i]
+    else:
+        M = {}
+        for i in range(1, fun_num+1):
+            M[f'M{i}'] = orthm_generator(D)
+
+    fit = hybrid_composition_func(x, fun_num, func, o, sigma, lamda, bias, M)
+    return fit
+    
 def getFunctionDetails(a):
     # [name, lb, ub, dim]
     param = {
@@ -393,6 +673,12 @@ def getFunctionDetails(a):
         "F22": ["F22", 0, 10, 4],
         "F23": ["F23", 0, 10, 4],
         "F24": ["F24", 0, 1.5, 2],
+        "CF1": ["CF1", -5, 5, 10],
+        "CF2": ["CF2", -5, 5, 10],
+        "CF3": ["CF3", -5, 5, 10],
+        "CF4": ["CF4", -5, 5, 10],
+        "CF5": ["CF5", -5, 5, 10],
+        "CF6": ["CF6", -5, 5, 10],
     }
     return param.get(a, "nothing")
 
@@ -424,7 +710,6 @@ def Mes(x):
     return Messenger().fun(x)
 def Gt1(x):
     return Gtoc1().fun(x)
-
 def getFunctionDetails(a):
     # [name, lb, ub, dim]
     param = {
@@ -451,7 +736,6 @@ def getFunctionDetails(a):
         "F21": ["F21", 0, 10, 4],
         "F22": ["F22", 0, 10, 4],
         "F23": ["F23", 0, 10, 4],
-        "F24": ["F24", 0, 1.5, 2],
         "Ca1": [
             "Ca1",
             Cassini1().bounds.lb,
@@ -493,3 +777,18 @@ def getFunctionDetails(a):
     }
     return param.get(a, "nothing")
 '''
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+EvoloPy-modif/benchmarks.py at master · zidanardany/EvoloPy-modif
