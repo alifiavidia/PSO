@@ -777,18 +777,3 @@ def getFunctionDetails(a):
     }
     return param.get(a, "nothing")
 '''
-Footer
-© 2023 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-EvoloPy-modif/benchmarks.py at master · zidanardany/EvoloPy-modif
