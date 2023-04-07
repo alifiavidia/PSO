@@ -66,7 +66,7 @@ def PSO(objf, lb, ub, dim, PopSize, iters):
             if gBestScore > fitness:
                 gBestScore = fitness
                 gBest = pos[i, :].copy()
-                print(gbest)
+                print(gBest)
 
         # Update the W of PSO
         w = wMax - l * ((wMax - wMin) / iters)
