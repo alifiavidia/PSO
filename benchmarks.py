@@ -332,9 +332,7 @@ def F23(L):
     return o
 
 def F24(x):
-    x1 = x[0]
-    x2 = x[1]
-    
+   
     lb_x1 = -30
     ub_x1 = -10
     
