@@ -346,7 +346,7 @@ def F24(x):
     else:
         penalty2 = 0
         
-    z = (x**2 - 50)**2 + penalty1 + penalty2 
+    z = -((x**2 - 50)**2) + penalty1 + penalty2 
     
     return z
 
