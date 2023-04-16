@@ -15,11 +15,11 @@ def PSO(objf, lb, ub, dim, PopSize, iters):
 
     # PSO parameters
 
-    Vmax = 6
+    Vmax = 10
     wMax = 0.9
-    wMin = 0.2
-    c1 = 2
-    c2 = 2
+    wMin = 0.4
+    c1 = 1
+    c2 = 1
 
     s = solution()
     if not isinstance(lb, list):
