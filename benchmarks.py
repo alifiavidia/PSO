@@ -333,20 +333,20 @@ def F23(L):
 
 def F24(x):
    
-    lb_x1 = -30
-    ub_x1 = -10
+    lb_x = -30
+    ub_x = -10
     
-    if x1 < lb_x1:
+    if x < lb_x:
         penalty1 = 1
     else:
         penalty1 = 0
         
-    if x1 > ub_x1:
+    if x > ub_x:
         penalty2 = 1
     else:
         penalty2 = 0
         
-    z = (x1**2 - 50)**2 + penalty1 + penalty2 
+    z = (x**2 - 50)**2 + penalty1 + penalty2 
     
     return z
 
