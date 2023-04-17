@@ -335,11 +335,11 @@ def F24(x):
     x1 = x[0]
     x2 = x[1]
     
-    lb_x1 = 4.33
-    ub_x1 = 4.94
+    lb_x1 = 60
+    ub_x1 = 120
     
-    lb_x2 = 4.33
-    ub_x2 = 4.94
+    lb_x2 = 60
+    ub_x2 = 120
     
     if x1 < lb_x1:
         penalty1 = 1
@@ -361,7 +361,7 @@ def F24(x):
     else:
         penalty4 = 0
         
-    z = x1**2 + x2 + penalty1 + penalty2 + penalty3 + penalty4
+    z = ((100 - x1) ** 2) / x2 + penalty1 + penalty2 + penalty3 + penalty4
     
     return z	
 
@@ -669,7 +669,7 @@ def getFunctionDetails(a):
         "F21": ["F21", 0, 10, 4],
         "F22": ["F22", 0, 10, 4],
         "F23": ["F23", 0, 10, 4],
-        "F24": ["F24", 4.33, 4.94, 2],
+        "F24": ["F24", 60, 120, 2],
         "CF1": ["CF1", -5, 5, 10],
         "CF2": ["CF2", -5, 5, 10],
         "CF3": ["CF3", -5, 5, 10],
