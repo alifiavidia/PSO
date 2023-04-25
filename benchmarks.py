@@ -7,7 +7,6 @@ Created on Tue May 17 12:46:20 2016
 import numpy as np
 import math
 from scipy.io import loadmat
-from basic_functions import fsphere, fgriewank, frastrigin, fackley, fweierstrass
 
 
 # define the function blocks
