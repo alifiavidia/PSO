@@ -392,7 +392,7 @@ def F25(x):
     else:
         penalty3 = 0
         
-    if x2 > ub_x3:
+    if x3 > ub_x3:
         penalty4 = 1
     else:
         penalty4 = 0
