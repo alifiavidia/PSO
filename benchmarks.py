@@ -537,6 +537,11 @@ def F29(x):
     
     return z
 
+def F30(x):
+    z = (x ** 2 - 50) ** 2
+    
+    return z
+
 #-----------------------------------------------------------------------------------------------
 # define the composition function
 def hybrid_composition_func(x, fun_num, func, o, sigma, lamda, bias, M):
@@ -847,6 +852,7 @@ def getFunctionDetails(a):
         "F27": ["F27", 6.4, 7.3, 2],
         "F28": ["F28", 6.4, 7.3, 2],
         "F29": ["F29", 6.4, 7.3, 2],
+        "F30": ["F30", 10, 30, 1],
         "CF1": ["CF1", -5, 5, 10],
         "CF2": ["CF2", -5, 5, 10],
         "CF3": ["CF3", -5, 5, 10],
