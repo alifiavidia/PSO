@@ -538,7 +538,7 @@ def F29(x):
     return z
 
 def F30(x):
-    z = (x ** 2 - 50) ** 2
+    z = - ((x ** 2 - 50) ** 2)
     
     return z
 
