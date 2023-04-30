@@ -538,7 +538,7 @@ def F29(x):
     return z
 
 def F30(x):
-    z = ((100 - x) ** 2)
+    z = ((100 - x) ** 2) / x
     
     return z
 
